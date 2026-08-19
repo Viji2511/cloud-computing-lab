@@ -1,0 +1,16 @@
+import socket
+import pickle
+class DataObject:
+    def __init__(self, names, values):
+        self.names=names
+        self.values=values
+HOST="127.0.0.1"
+PORT=5000
+client=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+client.connect((HOST,PORT))
+obj=DataObject("Alice",[10,20,30,40])
+serialized=pickle.dumps(obj)
+client.send(serialized)
+response=client.recv(1024).decode()
+print(response)
+client.close()
