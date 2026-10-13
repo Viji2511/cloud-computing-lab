@@ -1,0 +1,40 @@
+Task 1: Implement Server Consolidation Strategy
+1. Identify VMs
+1. Open VMware Workstation.
+2. Review all available VMs.
+3. Open each VM's configuration.
+4. Check the CPU, memory and storage allocated to each VM.
+5. Identify VMs with low resource usage or redundant workloads.
+2. Select a Consolidation Host
+Choose a VM that has sufficient:
+- CPU
+- Memory
+- Storage
+to accommodate the workloads being consolidated.
+3. Adjust VM Resources
+For each VM:
+1. Select the VM.
+2. Click Edit virtual machine settings.
+3. Adjust:
+   - Memory
+   - Processor
+4. Avoid over-provisioning resources.
+4. Migrate Services
+For each VM being consolidated:
+1. Copy the required files/services to the target VM.
+2. Start the services on the target VM.
+3. Verify that the services work correctly.
+5. Power Off and Remove Unused VMs
+After confirming that the services work on the consolidated VM:
+1. Power off the original VM.
+2. Right-click the unused VM.
+3. Select Remove.
+6. Check Resource Utilization
+On Linux, use:
+top
+
+or:
+htop
+
+Check CPU and memory usage.
+Verify that the consolidated VM can handle the workload without performance degradation.
