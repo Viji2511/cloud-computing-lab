@@ -1,0 +1,43 @@
+1. Install HAProxy
+Choose one VM to act as the Load Balancer.
+Install HAProxy:
+sudo apt install haproxy -y
+
+2. Configure HAProxy
+Open the configuration file:
+sudo nano /etc/haproxy/haproxy.cfg
+
+Add:
+frontend http_front
+    bind *:80
+    default_backend http_back
+
+backend http_back
+    balance roundrobin
+    server vm1 <VM1_IP>:80 check
+    server vm2 <VM2_IP>:80 check
+    server vm3 <VM3_IP>:80 check
+
+Replace:
+<VM1_IP>
+<VM2_IP>
+<VM3_IP>
+
+with the actual IP addresses of the Apache VMs.
+Save and exit:
+Ctrl + O
+Enter
+Ctrl + X
+
+3. Restart HAProxy
+sudo systemctl restart haproxy
+
+Enable HAProxy:
+sudo systemctl enable haproxy
+
+Check status:
+sudo systemctl status haproxy
+
+4. Test Load Balancing
+Open a browser and enter:
+http://<LOAD_BALANCER_IP>
