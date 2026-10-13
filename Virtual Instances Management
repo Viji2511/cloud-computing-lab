@@ -1,0 +1,47 @@
+Task 1: Create and Configure Virtual Instances
+1. Open VMware Workstation Pro 17
+1. Start VMware Workstation Pro 17.
+2. Open the existing Ubuntu 24.04.1 LTS virtual machine.
+2. Clone Virtual Machines
+1. Right-click the existing Ubuntu VM.
+2. Select Manage → Clone.
+3. Select Create a full clone.
+4. Give the cloned VM a suitable name.
+5. Repeat the process to create 2 or 3 additional VMs.
+3. Power On the Cloned VMs
+1. Right-click each cloned VM.
+2. Select Power On.
+3. Open the terminal inside each VM.
+4. Install Apache Web Server
+Perform the following steps inside each VM.
+Update packages:
+sudo apt update
+
+Install Apache:
+sudo apt install apache2 -y
+
+Enable Apache:
+sudo systemctl enable apache2
+
+Check Apache status:
+sudo systemctl status apache2
+
+5. Customize the Apache Web Page
+Open the Apache HTML file:
+sudo nano /var/www/html/index.html
+
+Modify the HTML page so that each VM has a unique page/message.
+Save and exit:
+Ctrl + O
+Enter
+Ctrl + X
+
+6. Find the IP Address of Each VM
+Run:
+ifconfig
+if it is not working - sudo apt install net-tools -y
+Record the IP address of every VM.
+Example:
+VM1 → <VM1_IP>
+VM2 → <VM2_IP>
+VM3 → <VM3_IP>
