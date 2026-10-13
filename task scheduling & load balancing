@@ -1,0 +1,119 @@
+Exercise 6 — Task Scheduling and Load Balancing in a Cloud Environment
+Part 1: Task Scheduling
+Task 1: Implement Task Scheduling with Cloud Services
+1. Open VMware Workstation Pro 17
+1. Start VMware Workstation Pro 17.
+2. Power on the required Ubuntu VM(s), for example:
+UbuntuSelcia
+
+2. Configure Task Scheduling
+Use cron to schedule tasks on the Ubuntu VM.
+3. Create a Task
+Create a shell script:
+nano script.sh
+
+Add the following:
+echo "Hello Selcia"
+
+Save and exit:
+Ctrl + O
+Enter
+Ctrl + X
+
+4. Configure the Cron Job
+Open the crontab:
+crontab -e
+
+Add the following line to execute the script every minute:
+*/1 * * * * ./script.sh >> ./output.log
+
+Save and exit.
+5. Verify the Scheduled Task
+Check the output file:
+cat output.log
+
+You can also monitor the cron logs:
+tail -f /var/log/syslog | grep CRON
+
+    
+**Part 2: Load Balancing**
+Task 1: Implement Load Balancing
+1. Install HAProxy
+Use a separate VM as the Load Balancer, or install HAProxy on one of the existing VMs.
+Install HAProxy:
+sudo apt install haproxy -y
+
+2. Configure HAProxy
+Open the HAProxy configuration file:
+sudo nano /etc/haproxy/haproxy.cfg
+
+Add the following configuration:
+frontend http_front
+    bind *:80
+    default_backend http_back
+
+backend http_back
+    balance roundrobin
+    server vm1 <VM1_IP>:80 check
+    server vm2 <VM2_IP>:80 check
+    server vm3 <VM3_IP>:80 check
+
+Replace:
+<VM1_IP>
+<VM2_IP>
+<VM3_IP>
+
+with the actual IP addresses of the backend VMs.
+Save and exit:
+Ctrl + O
+Enter
+Ctrl + X
+
+3. Start HAProxy
+Restart HAProxy:
+sudo systemctl restart haproxy
+
+Enable HAProxy:
+sudo systemctl enable haproxy
+
+Check HAProxy status:
+sudo systemctl status haproxy
+
+4. Test the Load Balancer
+Open a browser and enter:
+http://<LOAD_BALANCER_IP>
+
+Verify that the load balancer distributes requests among the configured VMs.
+    UIT2702-Cloud-LabManual_Sample
+Part 3: Advanced Scheduling and Load Balancing — Optional
+Task 1: Advanced Scheduling with Prioritization
+1. Create Multiple Scripts
+Create several script files for different tasks.
+Example:
+nano script1.sh
+
+Use script1.sh for a CPU-intensive task such as a loop or heavy computation.
+Create another script:
+nano script2.sh
+
+Use script2.sh for a lighter task, such as logging system information.
+2. Make the Scripts Executable
+Give execute permission to the scripts:
+chmod +x script1.sh
+chmod +x script2.sh
+
+3. Schedule Cron Jobs with Priority
+Open the crontab:
+crontab -e
+
+Add the required cron jobs with different nice values to assign different priority levels.
+Use:
+nice -n 10
+
+to lower the priority of a task.
+Priority range:
+-20 → Highest priority
+19   → Lowest priority
+
+A higher nice value gives the task lower priority, while a lower nice value gives the task higher priority.
+    
